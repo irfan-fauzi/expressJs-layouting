@@ -1,25 +1,20 @@
-
 const express = require('express')
 const app = express()
 const port = 3000
 
+// ejs
+app.set('view engine', 'ejs')
+
 app.get('/', (req, res) => {
-  
-  res.sendFile('./view/index.html', {
-    root: __dirname
-  })
+  res.render('index')
 })
 
 app.get('/about', (req, res) => {
-  res.sendFile('./view/about.html', {
-    root: __dirname
-  })
+  res.render('about')
 })
 
 app.get('/pricing', (req, res) => {
-  res.sendFile('./view/pricing.html', {
-    root: __dirname
-  })
+  res.render('pricing')
 })
 
 app.use('/', (req, res) => {
