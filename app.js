@@ -26,6 +26,12 @@ app.get('/about', (req, res) => {
   })
 })
 
+app.get('/pricing', (req, res) => {
+  res.sendFile('./view/pricing.html', {
+    root: __dirname
+  })
+})
+
 app.use('/', (req, res) => {
   res.status(404)
   res.send('Test')
