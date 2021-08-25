@@ -4,17 +4,7 @@ const app = express()
 const port = 3000
 
 app.get('/', (req, res) => {
-  //res.send('Hello World!')
-  // res.json([
-  //   {
-  //     name: "irfan",
-  //     email: "asdas"
-  //   },
-  //   {
-  //     name: "irfan",
-  //     email: "asdas"
-  //   }
-  // ])
+  
   res.sendFile('./view/index.html', {
     root: __dirname
   })
