@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { readAllData } = require('./utils/moduleContact')
+const { readAllData, showDetailContact } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -17,7 +17,7 @@ app.get('/', (req, res) => {
     userName: "irfan magrib",
     email: "irfan@yahoo.com",
     title: "home",
-    dummyData
+    
   })
 })
 
@@ -34,6 +34,11 @@ app.get('/contact', (req, res) => {
   res.render('contact', {
     allDataContact
   })
+})
+
+app.get('/contact/:name', (req, res) => {
+  const detail = showDetailContact(req.params.name)
+  res.render('details', { detail })
 })
 
 app.use('/', (req, res) => {
