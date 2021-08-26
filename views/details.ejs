@@ -7,7 +7,13 @@
   <div class="container mt-3">
     <div class="row">
       <div class="col-md-8">
-        <h2>Detail contact</h2>
+
+        <h2 class="title">Detail contact</h2>
+        <% if (!detail) { %>
+         <h1>😿 data tidak ada</h1>
+         <a href="/contact" class=" card-link">kembali</a>
+        <% } else { %>
+
         <div class="card" style="width: 18rem;">
           <div class="card-body">
             <h5 class="card-title"><%= detail.name %> </h5>
@@ -15,6 +21,7 @@
             <a href="/contact" class=" card-link">kembali</a>
           </div>
         </div>
+        <% } %> 
       </div>
     </div>
   </div>
