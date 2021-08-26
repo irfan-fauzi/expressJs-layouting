@@ -1,44 +1,19 @@
+
 const express = require('express')
+const { createPath } = require('./utils/contact')
+
 const app = express()
 const port = 3000
 
 // ejs
 app.set('view engine', 'ejs')
-
-const dummyData = [
-  {
-    name: "irfan",
-    email: "irfan@yahoo.com"
-  },
-  {
-    name: "heru",
-    email: "heru@yahoo.com"
-  },
-  {
-    name: "doddy",
-    email: "doddy@yahoo.com"
-  },
-  {
-    name: "erik",
-    email: "erik@yahoo.com"
-  },
-  {
-    name: "erik",
-    email: "erik@yahoo.com"
-  },
-
-]
-
 // build in middleware
 app.use(express.static('public'))
 
-// Application middleware
+createPath()
 
-app.use((req, res, next) => {
-  console.log('Time : ', Date.now())
-  next()
-})
 
+// Application middlew
 
 app.get('/', (req, res) => {
   res.render('index', {
@@ -57,6 +32,10 @@ app.get('/pricing', (req, res) => {
   res.render('pricing')
 })
 
+app.get('/contact', (req, res) => {
+  res.render('contact')
+})
+
 app.use('/', (req, res) => {
   res.status(404)
   res.send('404, not found')
@@ -67,4 +46,3 @@ app.listen(port, () => {
 })
 
 
-console.log("ok")
