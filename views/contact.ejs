@@ -6,8 +6,10 @@
  
   <div class="row">
     <div class="col-md-8">
+      
+      
       <h1 class="title">Daftar kontak</h1>
-
+      <a href="/contact/add" class="btn btn-primary">Tambah data</a>
       <% if (allDataContact.length === 0) { %>
        <h1>😿 data tidak ada</h1>
       <% } else { %>
@@ -28,7 +30,7 @@
               <td><%= contact.name %> </td>
               <td><%= contact.email %>  </td>
               <td>
-                <a href="/contact/<%= contact.name %> " class="btn btn-primary badge rounded">
+                <a href="/contact/<%= contact.name %> " class="btn btn-success badge rounded">
                   Detail
                 </a>
               </td>

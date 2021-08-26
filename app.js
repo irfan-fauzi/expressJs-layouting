@@ -21,6 +21,10 @@ app.get('/', (req, res) => {
   })
 })
 
+// app.post('/contact', (req, res, next) => {
+//   console.log(req.body.name)
+// })
+
 app.get('/about', (req, res) => {
   res.render('about')
 })
@@ -36,10 +40,16 @@ app.get('/contact', (req, res) => {
   })
 })
 
+app.get('/contact/add', (req, res) => {
+  res.render('add')
+})
+
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
   res.render('details', { detail })
 })
+
+
 
 app.use('/', (req, res) => {
   res.status(404)
