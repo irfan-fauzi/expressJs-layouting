@@ -29,6 +29,16 @@ const dummyData = [
 
 ]
 
+// build in middleware
+app.use(express.static('public'))
+
+// Application middleware
+
+app.use((req, res, next) => {
+  console.log('Time : ', Date.now())
+  next()
+})
+
 
 app.get('/', (req, res) => {
   res.render('index', {
@@ -49,7 +59,7 @@ app.get('/pricing', (req, res) => {
 
 app.use('/', (req, res) => {
   res.status(404)
-  res.send('Test')
+  res.send('404, not found')
 })
 
 app.listen(port, () => {
