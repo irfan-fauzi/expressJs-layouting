@@ -2,6 +2,7 @@
 <%- include('layouts/navbar') %> 
 
 <div class="container">
+ 
   <div class="row">
     <div class="col-md-8">
       <h1>Daftar kontak</h1>
@@ -15,17 +16,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>mark@yahoo.com</td>
-            <td>
-              <a class="btn btn-primary badge rounded">
-                Detail
-              </a>
-            </td>
-          </tr>
-          
+          <% allDataContact.forEach((contact, i) => { %>
+            <tr>
+              <th scope="row"><%= i + 1 %> </th>
+              <td><%= contact.name %> </td>
+              <td><%= contact.email %>  </td>
+              <td>
+                <a class="btn btn-primary badge rounded">
+                  Detail
+                </a>
+              </td>
+            </tr>
+          <% }) %>
+         
         </tbody>
       </table>
     </div>

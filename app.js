@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { createPath } = require('./utils/contact')
+const { readAllData } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -9,9 +9,6 @@ const port = 3000
 app.set('view engine', 'ejs')
 // build in middleware
 app.use(express.static('public'))
-
-createPath()
-
 
 // Application middlew
 
@@ -33,7 +30,10 @@ app.get('/pricing', (req, res) => {
 })
 
 app.get('/contact', (req, res) => {
-  res.render('contact')
+  const allDataContact = readAllData()
+  res.render('contact', {
+    allDataContact
+  })
 })
 
 app.use('/', (req, res) => {
