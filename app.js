@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { readAllData, showDetailContact } = require('./utils/moduleContact')
+const { readAllData, showDetailContact, addContact } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -9,8 +9,8 @@ const port = 3000
 app.set('view engine', 'ejs')
 // build in middleware
 app.use(express.static('public'))
+app.use(express.urlencoded())
 
-// Application middlew
 
 app.get('/', (req, res) => {
   res.render('index', {
@@ -20,10 +20,6 @@ app.get('/', (req, res) => {
     
   })
 })
-
-// app.post('/contact', (req, res, next) => {
-//   console.log(req.body.name)
-// })
 
 app.get('/about', (req, res) => {
   res.render('about')
@@ -43,6 +39,17 @@ app.get('/contact', (req, res) => {
 app.get('/contact/add', (req, res) => {
   res.render('add')
 })
+
+// POST data -------------------------------
+
+app.post('/contact', (req, res) => {
+  const inputUser = req.body
+  addContact(inputUser)
+  res.redirect('/contact')
+})
+
+
+
 
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)

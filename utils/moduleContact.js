@@ -31,9 +31,19 @@ const showDetailContact = (name) => {
   return selectedContact[0]
 }
 
+const writeContactToFile = (arrayJSON) => {
+  const stringArrayJson = JSON.stringify(arrayJSON)
+  fs.writeFileSync('dist/setting.json', stringArrayJson)
+}
+
+// save the date
+const addContact = (inputUser) => {
+  const arrayDatabase = readAllData()
+  createDirectory()
+  createEmptyFile()
+  arrayDatabase.push(inputUser)
+  writeContactToFile(arrayDatabase)
+}
 
 
-
-
-
-module.exports = { readAllData, showDetailContact }
+module.exports = { readAllData, showDetailContact, addContact }
