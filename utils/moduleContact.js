@@ -55,6 +55,18 @@ const writeContactToFile = (arrayJSON) => {
 //   }
 // }
 
+const checkDuplicate = (name) => {
+  const contacts = readAllData()
+  const isDuplicate = contacts.filter(el => {
+    return el.name === name
+  })
+  if(isDuplicate.length > 0){
+    return false
+  } else {
+    return true
+  }
+}
+
 // save the date
 const addContact = (inputUser) => {
   const arrayDatabase = readAllData()
@@ -68,4 +80,4 @@ const deleteContact = (params) => {
   console.log(params)
 }
 
-module.exports = { readAllData, showDetailContact, addContact, deleteContact }
+module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate }

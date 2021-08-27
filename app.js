@@ -1,7 +1,7 @@
 
 const express = require('express')
-const { body, validationResult } = require('express-validator')
-const { readAllData, showDetailContact, addContact, deleteContact } = require('./utils/moduleContact')
+const { body, validationResult, check } = require('express-validator')
+const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -44,10 +44,20 @@ app.get('/contact/add', (req, res) => {
 
 // POST data -------------------------------
 
-app.post('/contact', (req, res) => {
-  const inputUser = req.body
-  addContact(inputUser)
-  res.redirect('/contact')
+app.post('/contact',[
+ body('nama').custom((value) => {
+  const isDuplicate = checkDuplicate(value)
+  if(isDuplicate){
+    throw new Error('Nama kontak sudah terdaftar')
+  }
+  return true
+ }),
+ 
+ check('email', 'masukan email yang valid').isEmail()],(req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
 })
 
 
