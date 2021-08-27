@@ -1,5 +1,6 @@
 
 const express = require('express')
+const { body, validationResult } = require('express-validator')
 const { readAllData, showDetailContact, addContact, deleteContact } = require('./utils/moduleContact')
 
 const app = express()
@@ -10,6 +11,7 @@ app.set('view engine', 'ejs')
 // build in middleware
 app.use(express.static('public'))
 app.use(express.urlencoded())
+
 
 
 app.get('/', (req, res) => {

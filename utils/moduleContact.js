@@ -1,5 +1,4 @@
 const fs = require('fs')
-const validator = require('validator')
 
 const createDirectory = () => {
   const dir = './dist'
@@ -38,34 +37,29 @@ const writeContactToFile = (arrayJSON) => {
 }
 
 
-const validateDuplicateData = (arrayJSON, userInput, duplicateValue) => {
-  const isDuplicate = arrayJSON.filter(el => {
-    return el[duplicateValue] === userInput[duplicateValue]
-  })
-  if(isDuplicate.length > 0){
+// const validateDuplicateData = (arrayJSON, userInput, duplicateValue) => {
+//   const isDuplicate = arrayJSON.filter(el => {
+//     return el[duplicateValue] === userInput[duplicateValue]
+//   })
+//   if(isDuplicate.length > 0){
    
-    return false
-  }
-}
+//     return false
+//   }
+// }
 
-const validateEmail = (email) => {
-  const isEmail = validator.isEmail(email)
-  if(isEmail){
+// const validateEmail = (email) => {
+//   const isEmail = validator.isEmail(email)
+//   if(isEmail){
 
-    return false
-  }
-}
+//     return false
+//   }
+// }
 
 // save the date
 const addContact = (inputUser) => {
   const arrayDatabase = readAllData()
   createDirectory()
   createEmptyFile()
-
-  const isDuplicate = validateDuplicateData(arrayDatabase, inputUser, "name")
-  if(isDuplicate === false) return false
-
-
   arrayDatabase.push(inputUser)
   writeContactToFile(arrayDatabase)
 }
