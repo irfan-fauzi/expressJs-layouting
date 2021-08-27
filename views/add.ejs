@@ -20,6 +20,20 @@
   
       <button type="submit" class="btn btn-primary">Submit</button>
       </form>
+      
+       <% if ( typeof error != 'undefined' ) { %>
+  
+          <div class="alert alert-danger" role="alert">
+            <ul>
+              <% error.forEach(err => { %>
+               <li><%= err.msg  %> </li>
+              <% }) %>
+            </ul>
+          </div>
+        
+      <% } %>
+       
+   
     </div>
   </div>
 </div>
