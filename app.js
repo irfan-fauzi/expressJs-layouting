@@ -1,6 +1,6 @@
 
 const express = require('express')
-const { readAllData, showDetailContact, addContact } = require('./utils/moduleContact')
+const { readAllData, showDetailContact, addContact, deleteContact } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -49,13 +49,15 @@ app.post('/contact', (req, res) => {
 })
 
 
-
-
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
   res.render('details', { detail })
 })
 
+app.post('/contact', (req, res) => {
+  deleteContact(req.params.name)
+  res.redirect('/contact')
+})
 
 
 app.use('/', (req, res) => {
