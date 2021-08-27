@@ -1,10 +1,26 @@
 
 const express = require('express')
 const { body, validationResult, check } = require('express-validator')
+const session = require('express-session')
+const cookieParser = require('cookie-parser')
+const flash = require('connect-flash')
+
 const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
+
+// konfigurasi flash
+app.use(cookieParser('secret'))
+app.use(session({
+  cookie: { maxAge: 6000 },
+  secret: 'secret',
+  resave: true,
+  saveUninitialized: true
+}))
+
+app.use(flash())
+
 
 // ejs
 app.set('view engine', 'ejs')
@@ -34,7 +50,8 @@ app.get('/pricing', (req, res) => {
 app.get('/contact', (req, res) => {
   const allDataContact = readAllData()
   res.render('contact', {
-    allDataContact
+    allDataContact,
+    msg: req.flash('msg')
   })
 })
 
@@ -64,6 +81,8 @@ app.post('/contact',[
   } else {
     const inputUser = req.body
     addContact(inputUser)
+    // kirimkan flash
+    req.flash('msg', 'data kontak berhasil ditambahkan')
     res.redirect('/contact')
   }
   

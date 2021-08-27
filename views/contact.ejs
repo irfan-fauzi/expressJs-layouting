@@ -14,6 +14,11 @@
        <h1>😿 data tidak ada</h1>
       <% } else { %>
 
+      <% if (msg.length !== 0) { %>
+        <div class="alert alert-info" role="alert">
+          <%= msg %> 
+        </div>
+      <% } %>  
       <table class="table">
         <thead>
           <tr>
@@ -39,7 +44,6 @@
               </td>
             </tr>
           <% }) %>
-         
         </tbody>
       </table>
       <% } %> 
