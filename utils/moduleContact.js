@@ -57,14 +57,7 @@ const writeContactToFile = (arrayJSON) => {
 
 const checkDuplicate = (name) => {
   const contacts = readAllData()
-  const isDuplicate = contacts.filter(el => {
-    return el.name === name
-  })
-  if(isDuplicate.length > 0){
-    return false
-  } else {
-    return true
-  }
+  return contacts.find( contact => contact.name === name )
 }
 
 // save the date

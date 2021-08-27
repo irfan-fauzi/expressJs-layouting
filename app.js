@@ -45,7 +45,7 @@ app.get('/contact/add', (req, res) => {
 // POST data -------------------------------
 
 app.post('/contact',[
- body('nama').custom((value) => {
+ body('name').custom((value) => {
   const isDuplicate = checkDuplicate(value)
   if(isDuplicate){
     throw new Error('Nama kontak sudah terdaftar')
@@ -53,11 +53,18 @@ app.post('/contact',[
   return true
  }),
  
- check('email', 'masukan email yang valid').isEmail()],(req, res) => {
+ check('email', 'masukan email yang valid')
+ .isEmail()],
+ (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
+  } else {
+    const inputUser = req.body
+    addContact(inputUser)
+    res.redirect('/contact')
   }
+  
 })
 
 
