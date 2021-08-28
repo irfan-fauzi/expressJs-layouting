@@ -42,6 +42,12 @@ const checkDuplicate = (name) => {
   return contacts.find( contact => contact.name === name )
 }
 
+const duplicateEdit = (value) => {
+  const allDatacontact = readAllData()
+  console.log(allDatacontact)
+}
+
+
 // save the date
 const addContact = (inputUser) => {
   const arrayDatabase = readAllData()
@@ -58,5 +64,13 @@ const deleteContact = (name) => {
   listOfContact.splice(indexTarget, 1)
   writeContactToFile(listOfContact)
 }
+const updateContact = (target) => {
+  console.log(target)
+  
+}
 
-module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate }
+
+
+
+
+module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact, duplicateEdit }

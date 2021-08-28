@@ -5,7 +5,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 
-const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate } = require('./utils/moduleContact')
+const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact, duplicateEdit } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -66,7 +66,7 @@ app.get('/contact/add', (req, res) => {
 })
 
 // start ADD data ----------------------------------------
-app.post('/contact',[
+app.post('/contact', [
  body('name').custom((value) => {
   const isDuplicate = checkDuplicate(value)
   if(isDuplicate){
@@ -116,9 +116,53 @@ app.get('/contact/edit/:name', (req, res) => {
 })
 
 // process edit
-app.post('/contact/update', (req, res) => {
-  res.send(req.body)
-})
+app.post('/contact/update',[
+  // body('name').custom((value) => {
+  //  const isDuplicate = checkDuplicate(value)
+   
+  //  if(isDuplicate){
+  //    throw new Error('Nama kontak sudah terdaftar')
+  //  }
+  //  return true
+    
+  // }),
+  
+  body().custom(value => {
+    const {oldName, name} = value
+    const isDuplicate = checkDuplicate(name)
+    const validate = oldName === name
+    
+    if(!validate){
+      if(isDuplicate){
+        throw new Error('data sudah tersedia')
+      }
+    } 
+    
+ 
+  }),
+
+  check('email', 'masukan email yang valid')
+  .isEmail()],
+  (req, res) => {
+    
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+     const error = errors.array()
+     const detail = req.body
+     res.render(`edit`, { error, detail })
+     
+   } else {
+      // const contact = req.body
+      // updateContact(contact)
+    //  addContact(inputUser)
+    //  // kirimkan flash
+    //  req.flash('msg', 'data kontak berhasil ditambahkan')
+    //  res.redirect('/contact')
+    //  res.redirect('/contact')
+    console.log('masuk')
+   }
+   
+ })
 
 // --------------------
 
