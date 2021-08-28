@@ -18,7 +18,11 @@
           <div class="card-body">
             <h5 class="card-title"><%= detail.name %> </h5>
             <h6 class="card-subtitle mb-2 text-muted"><%= detail.email %> </h6>
+
+            <a href="/contact/delete/<%= detail.name %>" class="btn btn-danger badge" onclick=" return confirm('apakah anda yakin ?')">Hapus</a>
             <a href="/contact" class=" card-link">kembali</a>
+
+           
           </div>
         </div>
         <% } %> 

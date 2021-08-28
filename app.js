@@ -88,15 +88,22 @@ app.post('/contact',[
   
 })
 
+// delete
+app.get('/contact/delete/:name', (req ,res) => {
+  const detail = showDetailContact(req.params.name)
+   // jika kontak tidak ada
+   if(!detail){
+    res.status(404)
+    res.send('<h1>404</h1>')
+   } else {
+    deleteContact(req.params.name)
+    res.redirect('/contact')
+   }
+})
 
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
   res.render('details', { detail })
-})
-
-app.post('/contact', (req, res) => {
-  deleteContact(req.params.name)
-  res.redirect('/contact')
 })
 
 

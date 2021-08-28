@@ -37,24 +37,6 @@ const writeContactToFile = (arrayJSON) => {
 }
 
 
-// const validateDuplicateData = (arrayJSON, userInput, duplicateValue) => {
-//   const isDuplicate = arrayJSON.filter(el => {
-//     return el[duplicateValue] === userInput[duplicateValue]
-//   })
-//   if(isDuplicate.length > 0){
-   
-//     return false
-//   }
-// }
-
-// const validateEmail = (email) => {
-//   const isEmail = validator.isEmail(email)
-//   if(isEmail){
-
-//     return false
-//   }
-// }
-
 const checkDuplicate = (name) => {
   const contacts = readAllData()
   return contacts.find( contact => contact.name === name )
@@ -69,8 +51,12 @@ const addContact = (inputUser) => {
   writeContactToFile(arrayDatabase)
 }
 
-const deleteContact = (params) => {
-  console.log(params)
+const deleteContact = (name) => {
+  const listOfContact = readAllData()
+  const selectedItem = listOfContact.filter(el => el.name === name)
+  const indexTarget = listOfContact.indexOf(selectedItem[0])
+  listOfContact.splice(indexTarget, 1)
+  writeContactToFile(listOfContact)
 }
 
 module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate }
