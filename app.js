@@ -104,6 +104,8 @@ app.get('/contact/delete/:name', (req ,res) => {
 
 // edit
 app.get('/contact/edit/:name', (req, res) => {
+  const detail = showDetailContact(req.params.name)
+  
   res.render('edit')
 })
 
