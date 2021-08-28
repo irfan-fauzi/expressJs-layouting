@@ -97,15 +97,21 @@ app.get('/contact/delete/:name', (req ,res) => {
     res.send('<h1>404</h1>')
    } else {
     deleteContact(req.params.name)
+    req.flash('msg', `${req.params.name} telah dihapus`)
     res.redirect('/contact')
    }
 })
 
+// edit
+app.get('/contact/edit/:name', (req, res) => {
+  res.render('edit')
+})
+
+// detail
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
   res.render('details', { detail })
 })
-
 
 app.use('/', (req, res) => {
   res.status(404)
