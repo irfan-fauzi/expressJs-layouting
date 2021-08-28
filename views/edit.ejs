@@ -7,7 +7,7 @@
     <div class="col-md-6">
       <form class="form" method="POST" action="/contact/update">
 
-        <input type="hidden" name="oldName" value="<%= detail.name %>">
+        <input type="hidden" name="oldName" value="<%= (detail.oldName) ? detail.oldName : detail.name %>">
         <div class="mb-3">
           <label for="exampleInputEmail1" class="form-label">Nama anda</label>
           <input name="name" type="text" value="<%= detail.name %>"  class="form-control" id="name" aria-describedby="emailHelp" required>

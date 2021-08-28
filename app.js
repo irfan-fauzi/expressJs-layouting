@@ -117,30 +117,16 @@ app.get('/contact/edit/:name', (req, res) => {
 
 // process edit
 app.post('/contact/update',[
-  // body('name').custom((value) => {
-  //  const isDuplicate = checkDuplicate(value)
-   
-  //  if(isDuplicate){
-  //    throw new Error('Nama kontak sudah terdaftar')
-  //  }
-  //  return true
-    
-  // }),
+  body('name').custom((value, {req}) => {
+   const isDuplicate = checkDuplicate(value)
   
-  body().custom(value => {
-    const {oldName, name} = value
-    const isDuplicate = checkDuplicate(name)
-    const validate = oldName === name
-    
-    if(!validate){
-      if(isDuplicate){
-        throw new Error('data sudah tersedia')
-      }
-    } 
-    
- 
-  }),
+   if(value !== req.body.oldName && isDuplicate){
+     throw new Error('Nama sudah tersedia')
+   } 
+   
+   return true
 
+  }),
   check('email', 'masukan email yang valid')
   .isEmail()],
   (req, res) => {
