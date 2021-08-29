@@ -5,7 +5,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 
-const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact, duplicateEdit } = require('./utils/moduleContact')
+const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -117,12 +117,13 @@ app.get('/contact/edit/:name', (req, res) => {
 
 // process edit
 app.post('/contact/update',[
-  body('name').custom((value, {req}) => {
-   const isDuplicate = checkDuplicate(value)
-   if(value !== req.body.oldName && isDuplicate){
-     throw new Error('Nama sudah tersedia')
-   } 
-   return true
+  body().custom((val) => {
+    const isDuplicate = checkDuplicate(val.name)
+    const isNotSame = val.oldName !== val.name
+    if(isNotSame && isDuplicate){
+      throw new Error('Nama sudah terdaftar')
+    }
+    return true
   }),
   check('email', 'masukan email yang valid')
   .isEmail()],
@@ -140,8 +141,6 @@ app.post('/contact/update',[
    
  })
 
-// --------------------
-
 // detail
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
@@ -149,12 +148,10 @@ app.get('/contact/:name', (req, res) => {
 })
 
 // if page not found -----------------------
-
 app.use('/', (req, res) => {
   res.status(404)
   res.send('404, not found')
 })
-
 // ----------------------------------------
 
 // start server ---------------------------
