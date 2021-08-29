@@ -42,6 +42,12 @@ const checkDuplicate = (name) => {
   return contacts.find( contact => contact.name === name )
 }
 
+const duplicateEdit = (value) => {
+  const allDatacontact = readAllData()
+  console.log(allDatacontact)
+}
+
+
 // save the date
 const addContact = (inputUser) => {
   const arrayDatabase = readAllData()
@@ -59,4 +65,17 @@ const deleteContact = (name) => {
   writeContactToFile(listOfContact)
 }
 
-module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate }
+
+const updateContact = (target) => {
+  let listOfContact = readAllData()
+  listOfContact.forEach(el => {
+    if(el.name === target.oldName){
+       el.name = target.name
+       el.email = target.email
+    } 
+  })
+  writeContactToFile(listOfContact)
+}
+
+
+module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact, duplicateEdit }

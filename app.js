@@ -5,7 +5,7 @@ const session = require('express-session')
 const cookieParser = require('cookie-parser')
 const flash = require('connect-flash')
 
-const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate } = require('./utils/moduleContact')
+const { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact } = require('./utils/moduleContact')
 
 const app = express()
 const port = 3000
@@ -20,8 +20,6 @@ app.use(session({
 }))
 
 app.use(flash())
-
-
 // ejs
 app.set('view engine', 'ejs')
 // build in middleware
@@ -29,7 +27,7 @@ app.use(express.static('public'))
 app.use(express.urlencoded())
 
 
-
+// show home page
 app.get('/', (req, res) => {
   res.render('index', {
     userName: "irfan magrib",
@@ -39,14 +37,20 @@ app.get('/', (req, res) => {
   })
 })
 
+// show about page ------------------
 app.get('/about', (req, res) => {
   res.render('about')
 })
 
+// ----------------------------
+// show about page ------------------
 app.get('/pricing', (req, res) => {
   res.render('pricing')
 })
 
+// -----------------------------------
+
+// show contact page ------------------
 app.get('/contact', (req, res) => {
   const allDataContact = readAllData()
   res.render('contact', {
@@ -55,13 +59,14 @@ app.get('/contact', (req, res) => {
   })
 })
 
+// -------------------------------------
+// show add page
 app.get('/contact/add', (req, res) => {
   res.render('add')
 })
 
-// POST data -------------------------------
-
-app.post('/contact',[
+// start ADD data ----------------------------------------
+app.post('/contact', [
  body('name').custom((value) => {
   const isDuplicate = checkDuplicate(value)
   if(isDuplicate){
@@ -88,6 +93,8 @@ app.post('/contact',[
   
 })
 
+// end ADD data ----------------------------------------
+
 // delete
 app.get('/contact/delete/:name', (req ,res) => {
   const detail = showDetailContact(req.params.name)
@@ -97,23 +104,61 @@ app.get('/contact/delete/:name', (req ,res) => {
     res.send('<h1>404</h1>')
    } else {
     deleteContact(req.params.name)
+    req.flash('msg', `${req.params.name} telah dihapus`)
     res.redirect('/contact')
    }
 })
 
+// show edit page
+app.get('/contact/edit/:name', (req, res) => {
+  const detail = showDetailContact(req.params.name)
+  res.render('edit', { detail })
+})
+
+// process edit
+app.post('/contact/update',[
+  body().custom((val) => {
+    const isDuplicate = checkDuplicate(val.name)
+    const isNotSame = val.oldName !== val.name
+    if(isNotSame && isDuplicate){
+      throw new Error('Nama sudah terdaftar')
+    }
+    return true
+  }),
+  check('email', 'masukan email yang valid')
+  .isEmail()],
+  (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+     const error = errors.array()
+     const detail = req.body
+     res.render(`edit`, { error, detail })
+   } else {
+     const contact = req.body
+     updateContact(contact)
+     req.flash('msg', `${req.body.oldName} telah diperbarui`)
+     res.redirect('/contact')
+   }
+   
+ })
+
+// detail
 app.get('/contact/:name', (req, res) => {
   const detail = showDetailContact(req.params.name)
   res.render('details', { detail })
 })
 
-
+// if page not found -----------------------
 app.use('/', (req, res) => {
   res.status(404)
   res.send('404, not found')
 })
+// ----------------------------------------
 
+// start server ---------------------------
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
 })
+// -----------------------------------------------
 
 
