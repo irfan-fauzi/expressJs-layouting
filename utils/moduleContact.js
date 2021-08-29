@@ -64,22 +64,18 @@ const deleteContact = (name) => {
   listOfContact.splice(indexTarget, 1)
   writeContactToFile(listOfContact)
 }
+
+
 const updateContact = (target) => {
   let listOfContact = readAllData()
   listOfContact.forEach(el => {
     if(el.name === target.oldName){
-      // console.log(el.name, target.name)
        el.name = target.name
        el.email = target.email
     } 
-    
   })
   writeContactToFile(listOfContact)
-
 }
-
-
-
 
 
 module.exports = { readAllData, showDetailContact, addContact, deleteContact, checkDuplicate, updateContact, duplicateEdit }
