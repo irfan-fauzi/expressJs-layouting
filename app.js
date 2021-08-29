@@ -119,31 +119,23 @@ app.get('/contact/edit/:name', (req, res) => {
 app.post('/contact/update',[
   body('name').custom((value, {req}) => {
    const isDuplicate = checkDuplicate(value)
-  
    if(value !== req.body.oldName && isDuplicate){
      throw new Error('Nama sudah tersedia')
    } 
-   
    return true
-
   }),
   check('email', 'masukan email yang valid')
   .isEmail()],
   (req, res) => {
-    
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
      const error = errors.array()
      const detail = req.body
      res.render(`edit`, { error, detail })
-     
    } else {
-
      const contact = req.body
      updateContact(contact)
      res.redirect('/contact')
-    
-
    }
    
  })
