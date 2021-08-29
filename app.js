@@ -138,14 +138,12 @@ app.post('/contact/update',[
      res.render(`edit`, { error, detail })
      
    } else {
-      // const contact = req.body
-      // updateContact(contact)
-    //  addContact(inputUser)
-    //  // kirimkan flash
-    //  req.flash('msg', 'data kontak berhasil ditambahkan')
-    //  res.redirect('/contact')
-    //  res.redirect('/contact')
-    console.log('masuk')
+
+     const contact = req.body
+     updateContact(contact)
+     res.redirect('/contact')
+    
+
    }
    
  })

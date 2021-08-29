@@ -65,8 +65,17 @@ const deleteContact = (name) => {
   writeContactToFile(listOfContact)
 }
 const updateContact = (target) => {
-  console.log(target)
-  
+  let listOfContact = readAllData()
+  listOfContact.forEach(el => {
+    if(el.name === target.oldName){
+      // console.log(el.name, target.name)
+       el.name = target.name
+       el.email = target.email
+    } 
+    
+  })
+  writeContactToFile(listOfContact)
+
 }
 
 
