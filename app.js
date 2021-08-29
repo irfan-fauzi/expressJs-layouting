@@ -136,6 +136,7 @@ app.post('/contact/update',[
    } else {
      const contact = req.body
      updateContact(contact)
+     req.flash('msg', `${req.body.oldName} telah diperbarui`)
      res.redirect('/contact')
    }
    
